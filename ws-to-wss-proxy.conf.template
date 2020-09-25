@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: Apache-2.0
+# © 2020 Fastned B.V.
+server {
+        error_log /var/log/nginx/error.log debug;
+
+        ssl_prefer_server_ciphers on;
+
+        listen ${NGINX_PORT};
+        listen [::]:${NGINX_PORT};
+
+        location /ocpp/ {
+
+                # resolver 127.0.0.11; # 127.0.0.11 should be the default embedded DNS server in Docker (doesn't work?)
+                resolver 10.0.2.3; # That's the top one in /etc/resolv.conf of this Docker image, not sure why.
+		        proxy_ssl_server_name on;
+		        proxy_ssl_protocols TLSv1.2;
+
+                set $target "${WSS_SERVER_URL}";
+                proxy_pass https://$target;
+                proxy_http_version 1.1;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection "Upgrade";
+                proxy_set_header Host $target;
+        }
+}
