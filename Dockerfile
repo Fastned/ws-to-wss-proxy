@@ -12,3 +12,6 @@ COPY ./ws-to-wss-proxy.conf.template /etc/nginx/templates/default.conf.template
 RUN apk add dnsmasq-dnssec
 COPY ./load-dnsmasq-if-necessary.sh /docker-entrypoint.d/99-load-dnsmasq-if-necessary.sh
 RUN chmod +x /docker-entrypoint.d/99-load-dnsmasq-if-necessary.sh
+
+RUN mkdir /cert
+RUN chown nginx /cert
