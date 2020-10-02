@@ -8,18 +8,16 @@ server {
         listen ${NGINX_PORT};
         listen [::]:${NGINX_PORT};
 
-        location /ocpp/ {
+        location ~* /wss/(?<wss_host>[A-Za-z0-9\.-]+)/(?<wss_uri>.+)$ {
 
-                # resolver 127.0.0.11; # 127.0.0.11 should be the default embedded DNS server in Docker (doesn't work?)
-                resolver 10.0.2.3; # That's the top one in /etc/resolv.conf of this Docker image, not sure why.
-		        proxy_ssl_server_name on;
-		        proxy_ssl_protocols TLSv1.2;
+                resolver 127.0.0.11;
+                proxy_ssl_server_name on;
+                proxy_ssl_protocols TLSv1.2;
 
-                set $target "${WSS_SERVER_URL}";
-                proxy_pass https://$target;
+                proxy_pass https://$wss_host/$wss_uri;
                 proxy_http_version 1.1;
                 proxy_set_header Upgrade $http_upgrade;
                 proxy_set_header Connection "Upgrade";
-                proxy_set_header Host $target;
+                proxy_set_header Host $wss_host;
         }
 }
