@@ -1,10 +1,19 @@
 # First few lines copied from https://docs.github.com/en/actions/quickstart
 name: GitHub Action for scanning the resulting Docker container image
 run-name: ${{ github.actor }} is scanning the Docker container image that this project would build 🕵
+
+# With thanks to https://www.jeffgeerling.com/blog/2020/running-github-actions-workflow-on-schedule-and-other-events
 on:
-  - push
-  - schedule:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  schedule:
+    # * is a special character in YAML so you have to quote this string
     - cron: "0 13 * * 1"  # Every Monday at 13:00 UTC, copied from https://jasonet.co/posts/scheduled-actions/
+
 jobs:
   Scan-Resulting-Docker-Image:
     runs-on: ubuntu-latest
