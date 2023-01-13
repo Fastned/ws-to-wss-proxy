@@ -1,5 +1,7 @@
 # ws-to-wss-proxy
 
+![Docker image scan result](https://github.com/Fastned/ws-to-wss-proxy/actions/workflows/scan-docker-image.yml/badge.svg)
+
 ## What is this for?
 
 The ws-to-wss-proxy can act as a bridge between WebSocket clients that don't support TLS and WebSocket servers that
