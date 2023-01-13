@@ -1,7 +1,10 @@
 # First few lines copied from https://docs.github.com/en/actions/quickstart
 name: GitHub Action for scanning the resulting Docker container image
 run-name: ${{ github.actor }} is scanning the Docker container image that this project would build 🕵
-on: [push]
+on:
+  - [push]
+  - schedule:
+    - cron: "0 13 * * 1"  # Every Monday at 13:00 UTC, copied from https://jasonet.co/posts/scheduled-actions/
 jobs:
   Scan-Resulting-Docker-Image:
     runs-on: ubuntu-latest
