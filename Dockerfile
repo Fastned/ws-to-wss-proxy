@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 # © 2020 Fastned B.V.
-FROM nginx:1.23.3-alpine-slim
+FROM nginx:1.23.4-alpine-slim
 MAINTAINER Fastned contact@fastned.nl
 
 RUN apk update
